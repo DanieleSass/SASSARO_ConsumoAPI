@@ -42,6 +42,21 @@ public class API {
         return gson.fromJson(response.body(), Pokemon.class);
 
     }
+    public Pokemon getPokemonById(int id) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create(url+"pokemon/"+id))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if(response.statusCode() != 200){
+            throw new IOException("Errore " + response.statusCode());
+        }
+
+        Gson gson = new Gson();
+        return gson.fromJson(response.body(), Pokemon.class);
+    }
 
 }
 
